@@ -5,6 +5,7 @@ import BookRow from "../components/BookRow";
 import BookGrid from "../components/BookGrid";
 import LoadScreen from "../components/LoadScreen";
 import { fetchBooksByGenre, searchBooks } from "../components/BookFetch";
+import { Helmet } from "react-helmet-async";
 
 function Dashboard() {
   const [genres, setGenres] = useState([
@@ -69,44 +70,69 @@ function Dashboard() {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-br from-black via-blue-900 to-cyan-800">
-      <div className="w-full min-h-screen bg-black/40 p-6">
-        <div className="flex flex-wrap flex-col-reverse md:flex-row">
-          {!showSearchResults && (
-            <div className="w-full md:w-1/4 p-2 md:p-6">
-              <BookList genres={genres} />
-            </div>
-          )}
+    <>
+      <Helmet>
+        <title>
+          The Bookkeeper | Track, Discover, and Save Your Reading Journey
+        </title>
+        <meta
+          name="description"
+          content="Discover new reads, manage your TBR list, and track your favorite books with The Bookkeeper — your ultimate digital book collection."
+        />
+        <meta
+          name="keywords"
+          content="book tracker, reading list app, fantasy book organizer, digital bookshelf, manage books online"
+        />
+        <meta name="author" content="The Bookkeeper Team" />
+        <meta
+          property="og:title"
+          content="The Bookkeeper | Track, Discover, and Save Your Reading Journey"
+        />
+        <meta
+          property="og:description"
+          content="Discover new reads, manage your TBR list, and track your favorite books with The Bookkeeper."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <div className="w-screen min-h-screen bg-gradient-to-br from-black via-blue-900 to-cyan-800">
+        <div className="w-full min-h-screen bg-black/40 p-6">
+          <div className="flex flex-wrap flex-col-reverse md:flex-row">
+            {!showSearchResults && (
+              <div className="w-full md:w-1/4 p-2 md:p-6">
+                <BookList genres={genres} />
+              </div>
+            )}
 
-          <div
-            className={`w-full ${
-              !showSearchResults ? "md:w-2/4" : ""
-            } p-2 md:p-6`}
-          >
-            <SearchBar
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              handleSearch={handleSearch}
-              showSearchResults={showSearchResults}
-              clearSearch={clearSearch}
-            />
+            <div
+              className={`w-full ${
+                !showSearchResults ? "md:w-2/4" : ""
+              } p-2 md:p-6`}
+            >
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                handleSearch={handleSearch}
+                showSearchResults={showSearchResults}
+                clearSearch={clearSearch}
+              />
+            </div>
+          </div>
+
+          {/* Book rows */}
+          <div className="mt-8 space-y-12">
+            {loading && !showSearchResults ? (
+              <LoadScreen message="Loading books..." />
+            ) : isSearching ? (
+              <LoadScreen message="Searching books..." />
+            ) : showSearchResults ? (
+              <BookGrid searchTerm={searchTerm} searchResults={searchResults} />
+            ) : (
+              genres.map((genre) => <BookRow key={genre.id} genre={genre} />)
+            )}
           </div>
         </div>
-
-        {/* Book rows */}
-        <div className="mt-8 space-y-12">
-          {loading && !showSearchResults ? (
-            <LoadScreen message="Loading books..." />
-          ) : isSearching ? (
-            <LoadScreen message="Searching books..." />
-          ) : showSearchResults ? (
-            <BookGrid searchTerm={searchTerm} searchResults={searchResults} />
-          ) : (
-            genres.map((genre) => <BookRow key={genre.id} genre={genre} />)
-          )}
-        </div>
       </div>
-    </div>
+    </>
   );
 }
 
