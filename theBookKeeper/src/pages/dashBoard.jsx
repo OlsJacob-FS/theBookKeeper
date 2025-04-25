@@ -85,14 +85,14 @@ function Dashboard() {
         />
         <meta name="author" content="The Bookkeeper Team" />
         <meta
-          property="og:title"
+          property="title"
           content="The Bookkeeper | Track, Discover, and Save Your Reading Journey"
         />
         <meta
-          property="og:description"
+          property="description"
           content="Discover new reads, manage your TBR list, and track your favorite books with The Bookkeeper."
         />
-        <meta property="og:type" content="website" />
+        <meta property="type" content="website" />
       </Helmet>
       <div className="w-screen min-h-screen bg-gradient-to-br from-black via-blue-900 to-cyan-800">
         <div className="w-full min-h-screen bg-black/40 p-6">

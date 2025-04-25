@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 function BookInformation() {
   const { id } = useParams();
@@ -140,88 +141,114 @@ function BookInformation() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 w-screen min-h-screen">
-      <div className="bg-black/60">
-        <div className="container mx-auto p-4 min-h-screen w-screen">
-          {loading && <div className="text-center text-white">Loading...</div>}
-          {book && (
-            <div className="bg-black/40 p-8 rounded-xl shadow-md max-w-4xl mx-auto">
-              {message && (
-                <div
-                  className={`mb-4 p-3 rounded ${
-                    message.type === "success"
-                      ? "bg-green-500/40 text-white"
-                      : "bg-red-500/40 text-white"
-                  }`}
-                >
-                  {message.text}
-                </div>
-              )}
-
-              <div className="flex flex-col md:flex-row">
-                {book.volumeInfo.imageLinks && (
-                  <img
-                    src={book.volumeInfo.imageLinks.thumbnail.replace(
-                      "http:",
-                      "https:"
-                    )}
-                    alt={book.volumeInfo.title}
-                    className="w-48 h-56 mb-4 md:mb-0 mr-4"
-                  />
+    <>
+      <Helmet>
+        <title>Book Overview | Track, Review & Discover Your Next Read</title>
+        <meta
+          name="description"
+          content="Explore detailed summaries, organize your digital bookshelf, and track your reading progress for any book. Discover, log, and review your next great read on The Bookkeeper."
+        />
+        <meta
+          name="keywords"
+          content="Book summary, reading tracker, book reviews, digital bookshelf, organize reading list, TBR manager, book overview page, track books read, find new books"
+        />
+        <meta name="author" content="The Bookkeeper Team" />
+        <meta
+          property="title"
+          content="Book Overview | Track, Review & Discover Your Next Read"
+        />
+        <meta
+          property="description"
+          content="Explore detailed summaries, organize your digital bookshelf, and track your reading progress with The Bookkeeper."
+        />
+        <meta property="type" content="website" />
+      </Helmet>
+      <div className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 w-screen min-h-screen">
+        <div className="bg-black/60">
+          <div className="container mx-auto p-4 min-h-screen w-screen">
+            {loading && (
+              <div className="text-center text-white">Loading...</div>
+            )}
+            {book && (
+              <div className="bg-black/40 p-8 rounded-xl shadow-md max-w-4xl mx-auto">
+                {message && (
+                  <div
+                    className={`mb-4 p-3 rounded ${
+                      message.type === "success"
+                        ? "bg-green-500/40 text-white"
+                        : "bg-red-500/40 text-white"
+                    }`}
+                  >
+                    {message.text}
+                  </div>
                 )}
 
-                <div className="text-white">
-                  <h1 className="text-3xl font-bold mb-4">
-                    Title: {book.volumeInfo.title}
-                  </h1>
-                  <p className="text-lg font-semibold mb-4">
-                    Author(s):{" "}
-                    {book.volumeInfo.authors
-                      ? book.volumeInfo.authors.join(", ")
-                      : "Unknown"}
-                  </p>
-                  <p className="text-lg font-semibold mb-4">
-                    Published: {book.volumeInfo.publishedDate || "Unknown"}
-                  </p>
+                <div className="flex flex-col md:flex-row">
+                  {book.volumeInfo.imageLinks && (
+                    <img
+                      src={book.volumeInfo.imageLinks.thumbnail.replace(
+                        "http:",
+                        "https:"
+                      )}
+                      alt={book.volumeInfo.title}
+                      className="w-48 h-56 mb-4 md:mb-0 mr-4"
+                    />
+                  )}
 
-                  <p className="text-lg font-semibold mb-4">
-                    Description: {cleanDescription(book.volumeInfo.description)}
-                  </p>
+                  <div className="text-white">
+                    <h1 className="text-3xl font-bold mb-4">
+                      Title: {book.volumeInfo.title}
+                    </h1>
+                    <p className="text-lg font-semibold mb-4">
+                      Author(s):{" "}
+                      {book.volumeInfo.authors
+                        ? book.volumeInfo.authors.join(", ")
+                        : "Unknown"}
+                    </p>
+                    <p className="text-lg font-semibold mb-4">
+                      Published: {book.volumeInfo.publishedDate || "Unknown"}
+                    </p>
 
-                  <div className="flex flex-col md:flex-row justify-between items-center mt-4">
-                    <div className="place-content-start">
-                      <Link
-                        to={book.volumeInfo.previewLink}
-                        target="_blank"
-                        className="text-blue-500 underline mt-4"
-                      >
-                        View on Google Books
-                      </Link>
-                    </div>
-                    <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 mt-4 md:mt-0">
-                      <button
-                        className="bg-blue-600 w-40 rounded-full py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-                        onClick={handleAddToToRead}
-                        disabled={actionLoading}
-                      >
-                        {actionLoading ? "Adding..." : "Add to To Read"}
-                      </button>
-                      <button
-                        className="bg-blue-600 w-40 rounded-full py-2 text-white hover:bg-green-700 disabled:opacity-50"
-                        onClick={handleAddToHaveRead}
-                        disabled={actionLoading}
-                      >
-                        Add to Have Read
-                      </button>
+                    <p className="text-lg font-semibold mb-4">
+                      Description:{" "}
+                      {cleanDescription(book.volumeInfo.description)}
+                    </p>
+
+                    <div className="flex flex-col md:flex-row justify-between items-center mt-4">
+                      <div className="place-content-start">
+                        <Link
+                          to={book.volumeInfo.previewLink}
+                          target="_blank"
+                          className="text-blue-500 underline mt-4"
+                        >
+                          View on Google Books
+                        </Link>
+                      </div>
+                      <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 mt-4 md:mt-0">
+                        <button
+                          className="bg-blue-600 w-40 rounded-full py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                          onClick={handleAddToToRead}
+                          disabled={actionLoading}
+                        >
+                          {actionLoading ? "Adding..." : "Add to To Read"}
+                        </button>
+                        <button
+                          className="bg-blue-600 w-40 rounded-full py-2 text-white hover:bg-green-700 disabled:opacity-50"
+                          onClick={handleAddToHaveRead}
+                          disabled={actionLoading}
+                        >
+                          Add to Have Read
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
