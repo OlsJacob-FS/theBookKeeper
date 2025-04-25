@@ -9,6 +9,7 @@ import {
   shelfId,
   recommendedBooks,
 } from "../components/bookShelf/ShelfConstants";
+import { Helmet } from "react-helmet-async";
 
 function BookShelf() {
   const [bookshelves, setBookshelves] = useState([]);
@@ -117,23 +118,47 @@ function BookShelf() {
 
   if (sessionExpired) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-r from-slate-900 via-emerald-800 to-slate-800 flex items-center justify-center">
-        <div className="bg-black/40 p-8 rounded-xl w-full max-w-md text-center">
-          <h2 className="text-2xl text-white font-bold mb-4">
-            Session Expired
-          </h2>
-          <p className="text-white mb-6">
-            Your session has expired or you are not logged in. Please log in
-            again to access your bookshelf.
-          </p>
-          <button
-            onClick={redirectToLogin}
-            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full focus:outline-none"
-          >
-            Go to Login
-          </button>
+      <>
+        <Helmet>
+          <title>Your Digital Bookshelf | Track, and Manage Your Books</title>
+          <meta
+            name="description"
+            content="View and manage your personalized book collection. Mark books as “To Read” or “Have Read,” add favorites, and get tailored recommendations with The Bookkeeper."
+          />
+          <meta
+            name="keywords"
+            content="Book tracker, digital bookshelf, reading list app, manage book collection, personalized book recommendations, TBR app, books I've read, book log online"
+          />
+          <meta name="author" content="The Bookkeeper Team" />
+          <meta
+            property="title"
+            content="Your Digital Bookshelf | Track, and Manage Your Books"
+          />
+          <meta
+            property="description"
+            content="Manage your bookshelf, track books, and get reading recommendations with The Bookkeeper."
+          />
+          <meta property="type" content="website" />
+        </Helmet>
+
+        <div className="min-h-screen w-screen bg-gradient-to-r from-slate-900 via-emerald-800 to-slate-800 flex items-center justify-center">
+          <div className="bg-black/40 p-8 rounded-xl w-full max-w-md text-center">
+            <h2 className="text-2xl text-white font-bold mb-4">
+              Session Expired
+            </h2>
+            <p className="text-white mb-6">
+              Your session has expired or you are not logged in. Please log in
+              again to access your bookshelf.
+            </p>
+            <button
+              onClick={redirectToLogin}
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full focus:outline-none"
+            >
+              Go to Login
+            </button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
