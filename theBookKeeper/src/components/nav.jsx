@@ -25,13 +25,18 @@ function NavBar({ showLinks = true }) {
     <nav className="bg-gray-400 p-4 fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="left-2">
-          <Link to="/dashboard">
+          {showLinks === false && (
             <img src="images/logo.png" alt="logo" className="w-56 h-12" />
-          </Link>
+          )}
+          {/* <Link to="/dashboard"> */}
         </div>
-
         {showLinks && (
           <>
+            <div className="left-2">
+              <Link to="/dashboard">
+                <img src="images/logo.png" alt="logo" className="w-56 h-12" />
+              </Link>
+            </div>
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-6 ml-auto">
               <Link
