@@ -94,8 +94,8 @@ function Dashboard() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="w-screen min-h-screen bg-slate-50 dark:bg-slate-900">
-        <div className="w-full min-h-screen bg-black/40 p-6">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <div className="w-full min-h-screen bg-white dark:bg-slate-800 p-6">
           <div className="flex flex-wrap flex-col-reverse md:flex-row">
             {!showSearchResults && (
               <div className="w-full md:w-1/4 p-2 md:p-6">

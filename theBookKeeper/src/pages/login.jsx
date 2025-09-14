@@ -56,8 +56,8 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen w-screen bg-slate-50 dark:bg-slate-900 flex items-center place-items-center mx-auto justify-center p-4">
+      <div className="max-w-md w-full align-center justify-center place-content-center">
         {/* Hero Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
