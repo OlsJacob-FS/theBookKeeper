@@ -32,9 +32,9 @@ const BookshelfView = ({
   });
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-r from-slate-900 via-emerald-800 to-slate-800">
-      <div className="w-full min-h-screen bg-black/40 p-6">
-        <h1 className="text-4xl text-white text-center font-bold mb-8">
+    <div className="min-h-screen w-screen bg-slate-50 dark:bg-slate-900">
+      <div className="w-full min-h-screen bg-white dark:bg-slate-800 p-6">
+        <h1 className="text-4xl text-slate-800 dark:text-white text-center font-bold mb-8">
           Your Book Collection
         </h1>
 

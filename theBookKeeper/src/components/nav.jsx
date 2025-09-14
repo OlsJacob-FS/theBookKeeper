@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { getAuth, signOut } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { FiMenu, FiX, FiBookOpen, FiUser, FiHome } from "react-icons/fi";
 
 function NavBar({ showLinks = true }) {
   const navigate = useNavigate();
-  const auth = getAuth();
+  const { logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      localStorage.removeItem("authToken");
+      await logout();
       navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
@@ -22,44 +22,46 @@ function NavBar({ showLinks = true }) {
   };
 
   return (
-    <nav className="bg-gray-400 p-4 fixed top-0 left-0 w-full z-50">
+    <nav className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 fixed top-0 left-0 w-full z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="left-2">
-          {showLinks === false && (
-            <img src="images/logo.png" alt="logo" className="w-56 h-12" />
+        <div className="flex items-center">
+          {showLinks === false ? (
+            <img src="/images/logo.png" alt="The BookKeeper" className="w-48 h-10" />
+          ) : (
+            <Link to="/dashboard" className="flex items-center space-x-2">
+              <img src="/images/logo.png" alt="The BookKeeper" className="w-48 h-10" />
+            </Link>
           )}
-          {/* <Link to="/dashboard"> */}
         </div>
+        
         {showLinks && (
           <>
-            <div className="left-2">
-              <Link to="/dashboard">
-                <img src="images/logo.png" alt="logo" className="w-56 h-12" />
-              </Link>
-            </div>
             {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-6 ml-auto">
+            <div className="hidden md:flex items-center space-x-8">
               <Link
                 to="/dashboard"
-                className="text-white hover:text-blue-300 transition"
+                className="flex items-center space-x-2 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white transition-colors duration-200 font-medium"
               >
-                Dashboard
+                <FiHome className="w-4 h-4" />
+                <span>Dashboard</span>
               </Link>
               <Link
                 to="/bookshelf"
-                className="text-white hover:text-blue-300 transition"
+                className="flex items-center space-x-2 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white transition-colors duration-200 font-medium"
               >
-                Bookshelf
+                <FiBookOpen className="w-4 h-4" />
+                <span>Bookshelf</span>
               </Link>
               <Link
                 to="/profile"
-                className="text-white hover:text-blue-300 transition"
+                className="flex items-center space-x-2 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white transition-colors duration-200 font-medium"
               >
-                Profile
+                <FiUser className="w-4 h-4" />
+                <span>Profile</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-white hover:text-blue-300 transition border-none focus:outline-none"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
               >
                 Sign Out
               </button>
@@ -69,32 +71,10 @@ function NavBar({ showLinks = true }) {
             <div className="md:hidden">
               <button
                 onClick={toggleMenu}
-                className="text-white focus:outline-none"
+                className="text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white focus:outline-none p-2"
                 aria-label="Toggle menu"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {menuOpen ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
+                {menuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
               </button>
             </div>
           </>
@@ -103,37 +83,40 @@ function NavBar({ showLinks = true }) {
 
       {/* Mobile Menu Dropdown */}
       {showLinks && menuOpen && (
-        <div className="md:hidden absolute right-0 mt-4 bg-gray-400 p-4 rounded-bl-lg shadow-lg">
-          <div className="flex flex-col space-y-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 shadow-lg">
+          <div className="flex flex-col space-y-1 p-4">
             <Link
               to="/dashboard"
-              className="text-white hover:text-blue-300 transition"
+              className="flex items-center space-x-3 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-700 px-4 py-3 rounded-lg transition-colors duration-200"
               onClick={() => setMenuOpen(false)}
             >
-              Dashboard
+              <FiHome className="w-5 h-5" />
+              <span>Dashboard</span>
             </Link>
             <Link
               to="/bookshelf"
-              className="text-white hover:text-blue-300 transition"
+              className="flex items-center space-x-3 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-700 px-4 py-3 rounded-lg transition-colors duration-200"
               onClick={() => setMenuOpen(false)}
             >
-              Bookshelf
+              <FiBookOpen className="w-5 h-5" />
+              <span>Bookshelf</span>
             </Link>
             <Link
               to="/profile"
-              className="text-white hover:text-blue-300 transition"
+              className="flex items-center space-x-3 text-slate-600 dark:text-slate-200 hover:text-blue-600 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-700 px-4 py-3 rounded-lg transition-colors duration-200"
               onClick={() => setMenuOpen(false)}
             >
-              Profile
+              <FiUser className="w-5 h-5" />
+              <span>Profile</span>
             </Link>
             <button
               onClick={() => {
                 handleLogout();
                 setMenuOpen(false);
               }}
-              className="text-white hover:text-blue-300 transition border-none focus:outline-none text-left"
+              className="flex items-center space-x-3 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-3 rounded-lg transition-colors duration-200 text-left"
             >
-              Sign Out
+              <span>Sign Out</span>
             </button>
           </div>
         </div>

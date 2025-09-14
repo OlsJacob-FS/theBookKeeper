@@ -94,7 +94,7 @@ function Dashboard() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="w-screen min-h-screen bg-gradient-to-br from-black via-blue-900 to-cyan-800">
+      <div className="w-screen min-h-screen bg-slate-50 dark:bg-slate-900">
         <div className="w-full min-h-screen bg-black/40 p-6">
           <div className="flex flex-wrap flex-col-reverse md:flex-row">
             {!showSearchResults && (

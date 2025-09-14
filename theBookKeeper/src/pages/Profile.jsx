@@ -103,9 +103,9 @@ export default function Profile() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 w-screen min-h-screen">
-      <div className="w-screen min-h-screen flex items-center justify-center p-4 bg-black/40">
-        <div className="bg-black/40 p-8 rounded-xl w-full max-w-xl ">
+    <div className="bg-slate-50 dark:bg-slate-900 w-screen min-h-screen">
+      <div className="w-screen min-h-screen flex items-center justify-center p-4">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-xl w-full max-w-xl shadow-2xl border border-slate-200 dark:border-slate-700">
           <div className="flex flex-col md:flex-row gap-6 mb-6">
             {/* Profile Image */}
             <div className="w-32 h-32 mx-auto md:mx-0">

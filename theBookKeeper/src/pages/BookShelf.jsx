@@ -117,12 +117,12 @@ function BookShelf() {
 
   if (sessionExpired) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-r from-slate-900 via-emerald-800 to-slate-800 flex items-center justify-center">
-        <div className="bg-black/40 p-8 rounded-xl w-full max-w-md text-center">
-          <h2 className="text-2xl text-white font-bold mb-4">
+      <div className="min-h-screen w-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-xl w-full max-w-md text-center shadow-2xl border border-slate-200 dark:border-slate-700">
+          <h2 className="text-2xl text-slate-800 dark:text-white font-bold mb-4">
             Session Expired
           </h2>
-          <p className="text-white mb-6">
+          <p className="text-slate-600 dark:text-slate-300 mb-6">
             Your session has expired or you are not logged in. Please log in
             again to access your bookshelf.
           </p>

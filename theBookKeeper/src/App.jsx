@@ -5,8 +5,10 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Login from "./pages/login";
-import Dashboard from "./pages/dashBoard";
+import Dashboard from "./pages/Dashboard";
 import NavBar from "./components/nav";
 import Footer from "./components/Footer";
 import Profile from "./pages/Profile";
@@ -15,9 +17,13 @@ import BookInformation from "./pages/BookInformation";
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 function AppContent() {

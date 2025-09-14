@@ -1,52 +1,57 @@
 import React from "react";
-import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+
 export default function Footer({ showLinks = true }) {
   const navigate = useNavigate();
-  const auth = getAuth();
+  const { logout } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      localStorage.removeItem("authToken");
+      await logout();
       navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
   return (
-    <div className=" bg-gray-400 p-4">
-      <div className="container ml-10 items-center flex w-screen">
-        <p>Jacob Ols @2025</p>
-        {showLinks && (
-          <div className="mx-auto flex items-center space-x-6 p-4 ">
-            <a
-              href="/dashboard"
-              className="text-white hover:text-blue-300 transition"
-            >
-              Dashboard
-            </a>
-            <a
-              href="/bookshelf"
-              className="text-white hover:text-blue-300 transition"
-            >
-              Bookshelf
-            </a>
-            <a
-              href="/profile"
-              className="text-white hover:text-blue-300 transition"
-            >
-              Profile
-            </a>
-            <button
-              onClick={handleLogout}
-              className="text-white hover:text-blue-300 transition border-hidden focus:outline-none"
-            >
-              Sign Out
-            </button>
+    <footer className="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 mt-auto">
+      <div className="container mx-auto px-6 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="text-slate-600 dark:text-slate-300">
+            <p>&copy; 2025 Jacob Ols. All rights reserved.</p>
           </div>
-        )}
+          
+          {showLinks && (
+            <div className="flex items-center space-x-8">
+              <a
+                href="/dashboard"
+                className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors duration-200"
+              >
+                Dashboard
+              </a>
+              <a
+                href="/bookshelf"
+                className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors duration-200"
+              >
+                Bookshelf
+              </a>
+              <a
+                href="/profile"
+                className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors duration-200"
+              >
+                Profile
+              </a>
+              <button
+                onClick={handleLogout}
+                className="text-red-500 hover:text-red-600 transition-colors duration-200 focus:outline-none"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </footer>
   );
 }
