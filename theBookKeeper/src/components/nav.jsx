@@ -22,7 +22,7 @@ function NavBar({ showLinks = true }) {
   };
 
   return (
-    <nav className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 fixed top-0 left-0 w-full z-50 shadow-lg">
+    <nav className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-5 fixed top-0 left-0 w-full z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           {showLinks === false ? (
