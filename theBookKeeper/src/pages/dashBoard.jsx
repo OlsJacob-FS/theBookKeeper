@@ -94,41 +94,58 @@ function Dashboard() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-        <div className="w-full min-h-screen bg-white dark:bg-slate-800 p-6">
-          <div className="flex flex-wrap flex-col-reverse md:flex-row">
-            {!showSearchResults && (
-              <div className="w-full md:w-1/4 p-2 md:p-6">
-                <BookList genres={genres} />
+      <div className="min-h-screen">
+        <div className="w-full min-h-screen bg-white dark:bg-zinc-700 ">
+          <div className=" mx-auto px-4 py-6 sm:px-6 lg:px-8 place-content-center">
+            {/* Responsive grid layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              
+              {/* Genre Sidebar - Desktop only */}
+              {!showSearchResults && (
+                <div className="hidden lg:block lg:col-span-2">
+                  <div className="sticky top-24 place-content-center flex justify-center">
+                    <BookList genres={genres} />
+                  </div>
+                </div>
+              )}
+
+              {/* Main Content Area */}
+              <div className={`${!showSearchResults ? "lg:col-span-9" : "col-span-1"}`}>
+                
+                {/* Search Bar */}
+                <div className="mb-8 text-center ">
+                  <SearchBar
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    handleSearch={handleSearch}
+                    showSearchResults={showSearchResults}
+                    clearSearch={clearSearch}
+                  />
+                </div>
+
+                {/* Genre List - Mobile only */}
+                {!showSearchResults && (
+                  <div className="lg:hidden mb-8 text-center">
+                    <BookList genres={genres} />
+                  </div>
+                )}
+
+                {/* Book Content */}
+                <div className="space-y-8 p-4">
+                  {loading && !showSearchResults ? (
+                    <LoadScreen message="Loading books..." />
+                  ) : isSearching ? (
+                    <LoadScreen message="Searching books..." />
+                  ) : showSearchResults ? (
+                    <BookGrid searchTerm={searchTerm} searchResults={searchResults} />
+                  ) : (
+                    <div className="space-y-8">
+                      {genres.map((genre) => <BookRow key={genre.id} genre={genre} />)}
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-
-            <div
-              className={`w-full ${
-                !showSearchResults ? "md:w-2/4" : ""
-              } p-2 md:p-6`}
-            >
-              <SearchBar
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                handleSearch={handleSearch}
-                showSearchResults={showSearchResults}
-                clearSearch={clearSearch}
-              />
             </div>
-          </div>
-
-          {/* Book rows */}
-          <div className="mt-8 space-y-12">
-            {loading && !showSearchResults ? (
-              <LoadScreen message="Loading books..." />
-            ) : isSearching ? (
-              <LoadScreen message="Searching books..." />
-            ) : showSearchResults ? (
-              <BookGrid searchTerm={searchTerm} searchResults={searchResults} />
-            ) : (
-              genres.map((genre) => <BookRow key={genre.id} genre={genre} />)
-            )}
           </div>
         </div>
       </div>

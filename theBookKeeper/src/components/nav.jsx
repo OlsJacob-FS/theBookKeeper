@@ -61,7 +61,7 @@ function NavBar({ showLinks = true }) {
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg"
+                className="flex items-center space-x-3 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-3 rounded-lg transition-colors duration-200 text-left"
               >
                 Sign Out
               </button>
