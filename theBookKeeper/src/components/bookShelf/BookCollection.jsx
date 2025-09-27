@@ -146,8 +146,8 @@ export const createBookHandlers = (
         token,
         bookId,
         shelfId,
-        (bookId, shelfId) => {
-          handleSuccess("Book removed");
+        () => {
+          handleSuccess("Book removed successfully");
         },
         (errorMessage) => onError({ type: "error", text: errorMessage })
       );

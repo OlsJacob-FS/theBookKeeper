@@ -15,14 +15,34 @@ router.get("/:bookId", async (req, res) => {
       .get();
     
     const reviews = [];
-    snapshot.forEach((doc) => {
+    for (const doc of snapshot.docs) {
       const reviewData = doc.data();
+      
+      // Fetch user data to get the full name
+      let firstName = reviewData.userName || "Anonymous";
+      try {
+        if (reviewData.userId) {
+          const userDoc = await db.collection("users").doc(reviewData.userId).get();
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            const fullName = userData.name || reviewData.userName || "";
+            // Extract first name from full name
+            firstName = fullName.split(" ")[0] || fullName || "Anonymous";
+          }
+        }
+      } catch (userError) {
+        console.error("Error fetching user data:", userError);
+        // Fallback to existing userName
+        firstName = reviewData.userName || "Anonymous";
+      }
+      
       reviews.push({
         id: doc.id,
         ...reviewData,
+        firstName,
         createdAt: reviewData.createdAt?.toDate?.() || reviewData.createdAt
       });
-    });
+    }
     
     res.json({
       success: true,
@@ -58,26 +78,20 @@ router.post("/", verifyToken, async (req, res) => {
       });
     }
     
-    // Check if user already reviewed this book
-    const existingReviewRef = db.collection("reviews");
-    const existingSnapshot = await existingReviewRef
-      .where("bookId", "==", bookId)
-      .where("userId", "==", uid)
-      .get();
+    // Allow users to write multiple reviews for the same book
+    // Removed duplicate review check
     
-    if (!existingSnapshot.empty) {
-      return res.status(400).json({
-        success: false,
-        error: "You have already reviewed this book"
-      });
-    }
-    
+    // Extract first name from full name
+    const fullName = name || email || "Anonymous User";
+    const firstName = fullName.split(" ")[0] || fullName;
+
     // Create new review
     const reviewData = {
       bookId,
       bookTitle: bookTitle || "",
       userId: uid,
       userName: name || email || "Anonymous User",
+      firstName: firstName,
       userEmail: email || "",
       rating: parseInt(rating),
       title: title || "",

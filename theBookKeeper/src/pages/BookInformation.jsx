@@ -142,12 +142,12 @@ function BookInformation() {
   };
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-900 w-screen min-h-screen">
+    <div className="bg-slate-50 dark:bg-zinc-700 w-screen min-h-screen">
       <div className="bg-white dark:bg-slate-800">
         <div className="container mx-auto p-4 min-h-screen w-screen">
           {loading && <div className="text-center text-slate-600 dark:text-white">Loading...</div>}
           {book && (
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-md max-w-4xl mx-auto border border-slate-200 dark:border-slate-700">
+            <div className="bg-white dark:bg-zinc-700 p-8 rounded-xl shadow-md max-w-4xl mx-auto border border-slate-200 dark:border-slate-700">
               {message && (
                 <div
                   className={`mb-4 p-3 rounded ${

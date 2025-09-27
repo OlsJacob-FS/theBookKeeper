@@ -238,12 +238,12 @@ const BookReviews = ({ bookId, bookTitle }) => {
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-semibold">
-                      {review.userName?.charAt(0) || 'U'}
+                      {review.firstName?.charAt(0) || review.userName?.charAt(0) || 'U'}
                     </span>
                   </div>
                   <div>
                     <div className="font-medium text-slate-800 dark:text-white">
-                      {review.userName || 'Anonymous User'}
+                      {review.firstName || review.userName || 'Anonymous User'}
                     </div>
                     <div className="text-sm text-slate-600 dark:text-slate-400">
                       {new Date(review.createdAt).toLocaleDateString()}
